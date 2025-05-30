@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { NavigateNext } from "@mui/icons-material";
 
-function ProductForm({ products, setProducts }) {
+function ProductForm({ products, setProducts, onLogout, user }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -99,7 +99,7 @@ function ProductForm({ products, setProducts }) {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Header />
+      <Header user={user} onLogout={onLogout} />
       {/* Breadcrumbs */}
       <Breadcrumbs
         separator={<NavigateNext fontSize="small" />}
@@ -182,10 +182,28 @@ function ProductForm({ products, setProducts }) {
           />
 
           <Box sx={{ mt: 3, display: "flex", justifyContent: "space-between" }}>
-            <Button variant="outlined" onClick={() => navigate("/")}>
+            <Button
+              variant="outlined"
+              onClick={() => navigate("/")}
+              sx={{
+                color: "#6a0dad",
+                borderColor: "#6a0dad",
+                "&:hover": {
+                  borderColor: "#5a0b9d",
+                  color: "#5a0b9d",
+                },
+              }}
+            >
               Cancel
             </Button>
-            <Button type="submit" variant="contained">
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                backgroundColor: "#6a0dad",
+                "&:hover": { backgroundColor: "#5a0b9d" },
+              }}
+            >
               {isEditMode ? "Update" : "Add"} Product
             </Button>
           </Box>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "./Header";
+import Navigation from "./Navigation";
 import {
-  Container,
   Typography,
   Table,
   TableHead,
@@ -39,7 +38,7 @@ import {
   FilterList,
 } from "@mui/icons-material";
 
-function ProductList({ products, setProducts }) {
+function ProductList({ products, setProducts, onLogout, user }) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const navigate = useNavigate();
@@ -181,175 +180,186 @@ function ProductList({ products, setProducts }) {
   });
 
   return (
-    <Container
-      sx={{
-        mt: 4,
-        backgroundColor: "#f7f4ea",
-        minHeight: "100vh",
-        borderRadius: 2,
-        padding: 3,
-        paddingTop: 2,
-      }}
-    >
-      <Header />
-      <Typography variant="h5" color="primary">
-        Product List
-      </Typography>
-
+    <Box sx={{ display: "flex", width: "100%" }}>
+      <Navigation user={user} onLogout={onLogout} />
       <Box
+        component="main"
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: 2,
-          mb: 2,
+          flexGrow: 1,
+          p: 3,
+          width: "100%",
+          transition: (theme) =>
+            theme.transitions.create(["margin", "width"], {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.leavingScreen,
+            }),
         }}
       >
-        <Button
-          variant="contained"
-          startIcon={<Add />}
-          onClick={() => navigate("/add")}
+        <Typography variant="h5" color="#000000" sx={{ mb: 3 }}>
+          Product List
+        </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
+            mb: 2,
+          }}
         >
-          Add New Product
-        </Button>
-
-        <Box sx={{ display: "flex", gap: 2 }}>
-          {/* Status Filter */}
-          <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel id="status-filter-label">Status</InputLabel>
-            <Select
-              labelId="status-filter-label"
-              value={statusFilter}
-              label="Status"
-              onChange={(e) => setStatusFilter(e.target.value)}
-              startAdornment={
-                <InputAdornment position="start">
-                  <FilterList fontSize="small" />
-                </InputAdornment>
-              }
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Button
+              variant="contained"
+              startIcon={<Add />}
+              onClick={() => navigate("/add")}
+              sx={{
+                backgroundColor: "#6a0dad",
+                "&:hover": { backgroundColor: "#5a0b9d" },
+              }}
             >
-              <MenuItem value="all">All Status</MenuItem>
-              <MenuItem value="good">Good</MenuItem>
-              <MenuItem value="expired">Expired</MenuItem>
-              <MenuItem value="outOfStock">Out of Stock</MenuItem>
-            </Select>
-          </FormControl>
+              Add New Product
+            </Button>
+          </Box>
 
-          {/* Search Field */}
-          <TextField
-            label="Search by name or code"
-            variant="outlined"
-            size="small"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <Box sx={{ display: "flex", gap: 2 }}>
+            {/* Status Filter */}
+            <FormControl size="small" sx={{ minWidth: 150 }}>
+              <InputLabel id="status-filter-label">Status</InputLabel>
+              <Select
+                labelId="status-filter-label"
+                value={statusFilter}
+                label="Status"
+                onChange={(e) => setStatusFilter(e.target.value)}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <FilterList fontSize="small" />
+                  </InputAdornment>
+                }
+              >
+                <MenuItem value="all">All Status</MenuItem>
+                <MenuItem value="good">Good</MenuItem>
+                <MenuItem value="expired">Expired</MenuItem>
+                <MenuItem value="outOfStock">Out of Stock</MenuItem>
+              </Select>
+            </FormControl>
+
+            {/* Search Field */}
+            <TextField
+              label="Search by name or code"
+              variant="outlined"
+              size="small"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
         </Box>
-      </Box>
 
-      <Paper elevation={1} sx={{ overflow: "hidden" }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Code</TableCell>
-              <TableCell>Product Name</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>Expiry Date</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredProducts.map((p, index) => (
-              <TableRow key={p.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body2"
-                    fontFamily="monospace"
-                    fontWeight="medium"
-                  >
-                    {p.code}
-                  </Typography>
-                </TableCell>
-                <TableCell>{p.name}</TableCell>
-                <TableCell>${p.price}</TableCell>
-                <TableCell>{p.quantity}</TableCell>
-                <TableCell>{p.expiry}</TableCell>
-                <TableCell>
-                  {p.quantity <= 0 ? (
-                    <Chip
-                      label="Out of Stock"
-                      color="warning"
-                      size="small"
-                      sx={{ fontWeight: "bold" }}
-                    />
-                  ) : isExpired(p.expiry) ? (
-                    <Chip
-                      label="Expired"
-                      color="error"
-                      size="small"
-                      sx={{ fontWeight: "bold" }}
-                    />
-                  ) : (
-                    <Chip
-                      label="Good"
-                      color="success"
-                      size="small"
-                      sx={{ fontWeight: "bold" }}
-                    />
-                  )}
-                </TableCell>
-                <TableCell>
-                  <Tooltip title="Decrease">
-                    <IconButton onClick={() => adjustQuantity(p.id, -1)}>
-                      <Remove />
-                    </IconButton>
-                  </Tooltip>
-
-                  <Tooltip title="Increase">
-                    <IconButton onClick={() => adjustQuantity(p.id, 1)}>
-                      <AddIcon />
-                    </IconButton>
-                  </Tooltip>
-
-                  <Tooltip title="Edit">
-                    <IconButton onClick={() => navigate(`/edit/${p.id}`)}>
-                      <Edit />
-                    </IconButton>
-                  </Tooltip>
-
-                  <Tooltip title="Delete">
-                    <IconButton onClick={() => handleDelete(p.id)}>
-                      <Delete />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            ))}
-
-            {/* Display message when no products match the filters */}
-            {filteredProducts.length === 0 && (
+        <Paper elevation={1} sx={{ overflow: "hidden" }}>
+          <Table>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan={8} align="center" sx={{ py: 3 }}>
-                  <Typography variant="body1" color="text.secondary">
-                    No products found matching your criteria.
-                  </Typography>
-                </TableCell>
+                <TableCell>#</TableCell>
+                <TableCell>Code</TableCell>
+                <TableCell>Product Name</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Expiry Date</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </Paper>
+            </TableHead>
+            <TableBody>
+              {filteredProducts.map((p, index) => (
+                <TableRow key={p.id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body2"
+                      fontFamily="monospace"
+                      fontWeight="medium"
+                    >
+                      {p.code}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>{p.name}</TableCell>
+                  <TableCell>${p.price}</TableCell>
+                  <TableCell>{p.quantity}</TableCell>
+                  <TableCell>{p.expiry}</TableCell>
+                  <TableCell>
+                    {p.quantity <= 0 ? (
+                      <Chip
+                        label="Out of Stock"
+                        color="warning"
+                        size="small"
+                        sx={{ fontWeight: "bold" }}
+                      />
+                    ) : isExpired(p.expiry) ? (
+                      <Chip
+                        label="Expired"
+                        color="error"
+                        size="small"
+                        sx={{ fontWeight: "bold" }}
+                      />
+                    ) : (
+                      <Chip
+                        label="Good"
+                        color="success"
+                        size="small"
+                        sx={{ fontWeight: "bold" }}
+                      />
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Tooltip title="Decrease">
+                      <IconButton onClick={() => adjustQuantity(p.id, -1)}>
+                        <Remove />
+                      </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Increase">
+                      <IconButton onClick={() => adjustQuantity(p.id, 1)}>
+                        <AddIcon />
+                      </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Edit">
+                      <IconButton onClick={() => navigate(`/edit/${p.id}`)}>
+                        <Edit />
+                      </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Delete">
+                      <IconButton onClick={() => handleDelete(p.id)}>
+                        <Delete />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))}
+
+              {/* Display message when no products match the filters */}
+              {filteredProducts.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={8} align="center" sx={{ py: 3 }}>
+                    <Typography variant="body1" color="text.secondary">
+                      No products found matching your criteria.
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </Paper>
+      </Box>
 
       {/* Delete Confirmation Dialog */}
       <Dialog
@@ -403,7 +413,7 @@ function ProductList({ products, setProducts }) {
           {toast.message}
         </Alert>
       </Snackbar>
-    </Container>
+    </Box>
   );
 }
 

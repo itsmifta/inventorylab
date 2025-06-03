@@ -195,7 +195,12 @@ function ProductList({ products, setProducts, onLogout, user }) {
             }),
         }}
       >
-        <Typography variant="h5" color="#000000" sx={{ mb: 3 }}>
+        <Typography
+          variant="h5"
+          color="#000000"
+          sx={{ mb: 3 }}
+          data-testid="product-list-title"
+        >
           Product List
         </Typography>
 

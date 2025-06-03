@@ -123,6 +123,9 @@ function Login({ onLogin }) {
             autoFocus
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            inputProps={{
+              "data-testid": "username-input",
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -138,11 +141,15 @@ function Login({ onLogin }) {
             fullWidth
             name="password"
             label="Password"
+            data-testid="password-input"
             type={showPassword ? "text" : "password"}
             id="password"
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            inputProps={{
+              "data-testid": "password-input",
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -155,6 +162,7 @@ function Login({ onLogin }) {
                     aria-label="toggle password visibility"
                     onClick={() => setShowPassword(!showPassword)}
                     edge="end"
+                    data-testid="toggle-password-visibility"
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -169,6 +177,7 @@ function Login({ onLogin }) {
             fullWidth
             variant="contained"
             size="large"
+            data-testid="login-button"
             sx={{
               mt: 1,
               mb: 2,

@@ -27,7 +27,7 @@ import {
 
 function Navigation({ user, onLogout }) {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 

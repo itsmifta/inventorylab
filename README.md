@@ -39,29 +39,7 @@ npm start
 
 The application will open in your browser at [http://localhost:3000](http://localhost:3000).
 
-
-## Project Structure
-
+### Run cypress
 ```
-inventorylab/
-  ├── public/          # Static files
-  ├── src/             # Source code
-  │   ├── components/  # React components
-  │   ├── hooks/       # Custom React hooks
-  │   ├── utils/       # Utility functions
-  │   ├── App.js       # Main App component
-  │   └── index.js     # Application entry point
-  └── package.json     # Project dependencies
+npx cypress open
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## Contact
-
-Miftahul Jannah - jannaher98@gmail.com

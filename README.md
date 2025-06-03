@@ -23,7 +23,7 @@ Technology Stack
 
 1. Clone the repository
 ```
-git clone https://github.com/yourusername/inventorylab.git
+git clone https://github.com/itsmifta/inventorylab.git
 cd inventorylab
 ```
 

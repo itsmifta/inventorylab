@@ -23,3 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import LoginPage from "./pages/LoginPage";
+const loginPage = new LoginPage();
+
+Cypress.Commands.add("loginUI", (username, password) => {
+  cy.visit("/");
+  cy.contains("Login to manage your inventory").should("be.visible");
+  cy.get(loginPage.usernameInput).type(username);
+  cy.get(loginPage.passwordInput).type(password);
+  cy.get(loginPage.loginButton).click();
+});

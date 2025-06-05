@@ -43,3 +43,10 @@ The application will open in your browser at [http://localhost:3000](http://loca
 ```
 npx cypress open
 ```
+to run cypress in Open mode
+
+or...
+```
+npx cypress run
+```
+to run all the test scenarios in the command line

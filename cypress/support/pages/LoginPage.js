@@ -9,16 +9,6 @@ class LoginPage {
   loginButton = 'button[data-testid="login-button"]';
   errorInvalidCredentials = '[data-testid="error-invalid-credentials"]';
 
-  // Actions
-  loginUI(username, password) {
-    cy.visit("/");
-    cy.contains("Login to manage your inventory").should("be.visible");
-    cy.get(this.usernameInput).type(username);
-    cy.get(this.passwordInput).type(password);
-    cy.get(this.loginButton).click();
-    return this;
-  }
-
   // Assertions
   verifySuccessfulLogin() {
     cy.get(productListPage.pageTitle).should("exist");
@@ -32,6 +22,10 @@ class LoginPage {
       "have.text",
       "Invalid username or password. Please try again."
     );
+  }
+
+  verifySuccessfulLogout() {
+    cy.contains("Login to manage your inventory").should("be.visible");
   }
 }
 

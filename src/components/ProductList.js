@@ -223,6 +223,7 @@ function ProductList({ products, setProducts, onLogout, user }) {
                 backgroundColor: "#6a0dad",
                 "&:hover": { backgroundColor: "#5a0b9d" },
               }}
+              data-testid="add-product-button"
             >
               Add New Product
             </Button>
@@ -414,6 +415,7 @@ function ProductList({ products, setProducts, onLogout, user }) {
           onClose={closeToast}
           severity={toast.severity}
           sx={{ width: "100%" }}
+          data-testid="snackbar"
         >
           {toast.message}
         </Alert>

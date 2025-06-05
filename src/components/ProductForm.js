@@ -120,7 +120,7 @@ function ProductForm({ products, setProducts, onLogout, user }) {
       </Breadcrumbs>
 
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" gutterBottom data-testid="form-title">
           {isEditMode ? "Edit Product" : "Add New Product"}
         </Typography>
 
@@ -203,6 +203,7 @@ function ProductForm({ products, setProducts, onLogout, user }) {
                 backgroundColor: "#6a0dad",
                 "&:hover": { backgroundColor: "#5a0b9d" },
               }}
+              data-testid="submit-product"
             >
               {isEditMode ? "Update" : "Add"} Product
             </Button>

@@ -204,6 +204,7 @@ function Navigation({ user, onLogout }) {
                 px: 2.5,
               }}
               onClick={onLogout}
+              data-testid="logout-button"
             >
               <Tooltip title={open ? "" : "Logout"} placement="right">
                 <ListItemIcon

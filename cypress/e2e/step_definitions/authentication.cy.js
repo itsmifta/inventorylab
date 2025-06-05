@@ -11,3 +11,11 @@ When("user login using valid credentials", () => {
 Then("user successfully login", () => {
   loginPage.verifySuccessfulLogin();
 });
+
+When("user login using invalid credentials", () => {
+  loginPage.loginUI("invalidUser", "invalidPassword");
+});
+
+Then("user cannot login", () => {
+  loginPage.verifyUnsuccessfulLogin();
+});

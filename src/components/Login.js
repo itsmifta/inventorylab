@@ -105,6 +105,7 @@ function Login({ onLogin }) {
               severity="error"
               sx={{ mb: 3, borderRadius: 1 }}
               onClose={() => setError("")}
+              data-testid="error-invalid-credentials"
             >
               {error}
             </Alert>

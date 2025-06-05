@@ -1,0 +1,13 @@
+{
+  "extends": ["plugin:cypress/recommended"],
+  "rules": {
+    "cypress/no-assigning-return-values": "error",
+    "cypress/no-unnecessary-waiting": "off",
+    "cypress/assertion-before-screenshot": "warn",
+    "cypress/no-force": "off",
+    "cypress/no-async-tests": "error",
+    "cypress/no-pause": "warn",
+    "testing-library/await-async-utils": "off",
+    "quotes": "off"
+  }
+}
